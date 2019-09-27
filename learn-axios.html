@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Article</title>
+       
+       
+    </head>
+    <body>
+        <div id="app" class="container">
+            <h1>
+                Articles
+            </h1>
+            <button class="btn btn-primary" @click="getArticles">Get Articles</button>
+<!--点按钮执行此方法-->
+            <table class="table" v-if="articles.length">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Intro</th>
+						            <th scope="col">Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(article) in articles">
+						<td>{{article.id}}</td>
+                        <td>{{article.name}}</td>
+						<td>{{article.intro}}</td>
+						<td>{{article.age}}</td>
+                        
+                      
+                    </tr>
+                </tbody>
+            </table>   
+        </div>
+        <script src="vue.min.js"></script>  <!--已下载到当前文件夹，也可引用网上的,-->
+        <script src="axios.min.js"><!--已下载到当前文件夹，也可引用网上的,这是生产版-->
+
+			
+		</script>
+        <script>
+			//$(window).load(function(){"getArticles"})
+            let vue=new Vue({
+                el:'#app',
+                data:{
+                    articles:{}
+                },
+				mounted(){
+						this.getArticles()    //打开当前页面自动执行此方法
+				}				,
+                methods:{
+                    getArticles(){					
+                        axios.post('http://localhost:8081/axiophp.php')
+                        .then((response)=>{
+                            this.articles=response.data;
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        })
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
